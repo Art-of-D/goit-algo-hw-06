@@ -1,6 +1,7 @@
 from network.network_tools import *
 from network.search_algo.dfs import *
 from network.search_algo.bfs import *
+from network.search_algo.dejikstra import *
 from timeit import timeit
 
 graph = {}
@@ -9,9 +10,9 @@ graph = {}
 file_name = "transport_network.graphml" if graph == {} else graph
 file = load_graph(file_name)
 
-#G = graph_data(file)
+G = graph_data(file)
 
-# Перетворюємо граф networkx у список суміжності
+# Перетворюємо граф networkx у список суміжності для потрібності алгоритмів
 graph_dict = {str(node): list(map(str, file.neighbors(node))) for node in file.nodes}
 
 
@@ -28,5 +29,8 @@ path = bfs_iterative(graph_dict, start_G, end_G)
 print(path)
 print(f"BFS time {timeit(lambda: bfs_iterative(graph_dict, start_G, end_G), number=1):.6f} sec")
 
-
+print("Dijkstra:")
+path = dijkstra(file, start_G, end_G)
+print(path)
+print(f"Dijkstra time {timeit(lambda: dijkstra(file, start_G, end_G), number=1):.6f} sec")
 
